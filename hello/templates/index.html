@@ -15,7 +15,7 @@
   </div>
 </div>
 <div class="container ">
- 
+
 
 
   <!-- </div> -->
@@ -27,11 +27,16 @@
     <div class="col-md-6">
       <h3><span class="glyphicon glyphicon-info-sign"></span> Sample Plots</h3>
       <div id='myDivLine'>
+        <!-- Plotly chart will be drawn inside this DIV -->
+      </div>
+      <div id='myDiv'>
+        <!-- Plotly chart will be drawn inside this DIV -->
+      </div>
+
+      <div id='myDivHist'>
           <!-- Plotly chart will be drawn inside this DIV -->
         </div>
-        <div id='myDiv'>
-            <!-- Plotly chart will be drawn inside this DIV -->
-          </div>
+
     </div>
     <div class="col-md-6">
       <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
@@ -49,8 +54,8 @@
       </ul>
       <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
       <ul>
-          <h1>All available courts for {{ club_name }}</h1>
-          <!-- <ul>
+        <h1>All available courts for {{ club_name }}</h1>
+        <!-- <ul>
             {% for court in courts %}
               <li>{{ court.club.establishment }}</li>
             {% endfor %}
@@ -69,34 +74,35 @@
 
 {% load js %}
 <script>
-    var data = [
-      {
-        // x: ['giraffes', 'orangutans', 'monkeys' ,'hi'],
-        x: {{df_index | js}} ,
 
-        y:  {{df_ml| js}},
-        type: 'bar'
-      }
-    ];
+  var data = [
+    {
+      x: {{ df_index | js}} ,
+      y: {{ df_ml | js }},
+      type: 'bar'
+    }
+  ];
 
-    Plotly.newPlot('myDiv', data);
+  Plotly.newPlot('myDiv', data);
 
 
-    var trace1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      type: 'scatter'
-    };
+  var trace1 = {
+    x: {{ df_index | js}} ,
+    y: {{ df_ml | js }},
+    type: 'scatter'
+  };
+  var data = [trace1];
+  Plotly.newPlot('myDivLine', data);
 
-    var trace2 = {
-      x: [1, 2, 3, 4],
-      y: [16, 5, 11, 9],
-      type: 'scatter'
-    };
 
-    var data = [trace1, trace2];
+  var trace = {
+    x: {{ df_ml | js}} ,
+    type: 'histogram',
+  };
+  var data = [trace];
+  Plotly.newPlot('myDivHist', data);
 
-    Plotly.newPlot('myDivLine', data);
-  </script>
+
+</script>
 
 {% endblock %}
