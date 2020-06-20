@@ -27,11 +27,15 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 ## TODO
 - More Plots
   
-
-[![Deployed on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+<!-- [![Deployed on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) -->
 
 ## Documentation
 
-For more information about using Python on Heroku, see these Dev Center articles:
+For more information about this app see these:
 
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)
+- Pandas
+- Plotly js
+- Django [template tags .. ]
+- Heroku
+  
+### Deployed on Heroku 
