@@ -56,8 +56,10 @@ def index(request):
 
     return render(request, "index.html",
                   {'courts': [20, 4, 23], 'club_name': 'club_name',
-                   'df_ml': list(df_ml), 'df_index': list(df_index)
-
+                   'df_ml': list(df_ml), 'df_index': list(df_index),
+                   'month_full': list(month_full), 'month_full_index': list(month_full_index),
+                   'df_ml_full': list(df_ml_full), 'df_index_full': list(df_index_full),
+                   'df_ml_30': list(df_ml_30), 'df_index_30': list(df_index_30),
                    })
 
 

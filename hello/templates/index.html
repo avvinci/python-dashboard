@@ -6,9 +6,8 @@
 <div class="jumbotron text-center">
   <div class="container">
 
-    <h3>Getting Started with Python and Analytics on Heroku</h3>
-    <p>This is a sample Python application deployed to Heroku. It's a reasonably simple app - but a good foundation for
-      understanding how to get the most out of the Heroku platform.</p>
+    <h3>Analytics using Python and Plotly</h3>
+    <p>This is a personal analytics dashboard application.</p>
     <!-- <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python"><span class="glyphicon glyphicon-flash"></span> Getting Started with Python</a> -->
     <a type="button" class="btn btn-lg btn-primary" href="https://github.com/avvinci/python-dashboard"><span
         class="glyphicon glyphicon-download"></span> Source on GitHub</a>
@@ -25,7 +24,7 @@
   <hr>
   <div class="row">
     <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> Sample Plots</h3>
+      <h3><span class="glyphicon glyphicon-info-sign"></span>  Last 10 days</h3>
       <div id='myDivLine'>
         <!-- Plotly chart will be drawn inside this DIV -->
       </div>
@@ -39,6 +38,30 @@
 
     </div>
     <div class="col-md-6">
+        <h3><span class="glyphicon glyphicon-info-sign"></span>  Last 30 days</h3>
+        <div id='myDivLine30'>
+          <!-- Plotly chart will be drawn inside this DIV -->
+        </div>
+        <div id='myDiv30'>
+          <!-- Plotly chart will be drawn inside this DIV -->
+        </div>
+  
+        <div id='myDivHist30'>
+            <!-- Plotly chart will be drawn inside this DIV -->
+          </div>
+
+
+          <h3><span class="glyphicon glyphicon-info-sign"></span>  Monthly Stats</h3>
+          <div id='myDivLineMonth'>
+            <!-- Plotly chart will be drawn inside this DIV -->
+          </div>
+          <div id='myDivMonth'>
+            <!-- Plotly chart will be drawn inside this DIV -->
+          </div>
+    
+          <div id='myDivHistMonth'>
+              <!-- Plotly chart will be drawn inside this DIV -->
+            </div>
       <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
       <ul>
         <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
@@ -54,14 +77,11 @@
       </ul>
       <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
       <ul>
-        <h1>All available courts for {{ club_name }}</h1>
         <!-- <ul>
             {% for court in courts %}
               <li>{{ court.club.establishment }}</li>
             {% endfor %}
           </ul> -->
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
         <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started with Python on
             Heroku</a></li>
         <li><a href="https://devcenter.heroku.com/articles/django-app-configuration">Configuring Django Apps for
@@ -74,16 +94,36 @@
 
 {% load js %}
 <script>
-
+var layout = {
+    title: 'Number of hours spent on ML each day for last 10 days',
+    font:{
+      family: 'Raleway, sans-serif'
+    },
+    showlegend: false,
+    
+    yaxis: {
+      gridwidth: 2
+    },
+  };
   var data = [
     {
       x: {{ df_index | js}} ,
       y: {{ df_ml | js }},
-      type: 'bar'
+      type: 'bar',
+      text: {{ df_ml | js }}.map(String),
+      textposition: 'auto',
+      hoverinfo: 'none',
+      marker: {
+        color: 'rgba(240,240,0,.5)',
+        line: {
+          color: 'rgb(8,48,107)',
+          width: 1.5
+        }
+      }
     }
   ];
 
-  Plotly.newPlot('myDiv', data);
+  Plotly.newPlot('myDiv', data,layout);
 
 
   var trace1 = {
@@ -92,15 +132,115 @@
     type: 'scatter'
   };
   var data = [trace1];
-  Plotly.newPlot('myDivLine', data);
+  Plotly.newPlot('myDivLine', data,layout);
 
 
   var trace = {
     x: {{ df_ml | js}} ,
     type: 'histogram',
+    text: {{ df_ml | js }}.map(String),
+      textposition: 'auto',
+      hoverinfo: 'none',
+      marker: {
+        color:  'rgba(58,200,225,.5)',
+        line: {
+          color: 'rgb(8,48,107)',
+          width: 1.2
+        }
+      }
   };
   var data = [trace];
   Plotly.newPlot('myDivHist', data);
+
+
+  var layout = {
+    title: 'Number of hours spent on ML each day for last month',
+    font:{
+      family: 'Raleway, sans-serif'
+    },
+    showlegend: false,
+    
+    yaxis: {
+      gridwidth: 2
+    },
+  };
+
+
+  var data = [
+    {
+      x: {{ df_index_30 | js}} ,
+      y: {{ df_ml_30 | js }},
+      type: 'bar'
+    }
+  ];
+
+  Plotly.newPlot('myDiv30', data,layout);
+
+ 
+
+  var trace1 = {
+    x: {{ df_index_30 | js}} ,
+    y: {{ df_ml_30 | js }},
+    type: 'scatter'
+  };
+  var data = [trace1];
+  Plotly.newPlot('myDivLine30', data ,layout);
+
+  var layout = {
+    title: 'Number of hours histogram for last month',
+    font:{
+      family: 'Raleway, sans-serif'
+    },
+    showlegend: false,
+    
+    yaxis: {
+      gridwidth: 2
+    },
+  };
+
+  var trace = {
+    x: {{ df_ml_30 | js}} ,
+    type: 'histogram',
+    marker: {
+        color: 'rgba(240,70,0,.5)'
+      }
+  };
+  var data = [trace];
+  Plotly.newPlot('myDivHist30', data, layout);
+
+
+  var trace1 = {
+    x: {{ month_full_index | js}} ,
+    y: {{ month_full | js }},
+    type: 'bar',
+    text: {{ month_full | js }}.map(String),
+      textposition: 'auto',
+      hoverinfo: 'none',
+      marker: {
+        color:  'rgba(58,200,225,.5)',
+        line: {
+          color: 'rgb(8,48,107)',
+          width: 1.5
+        }
+      }
+  };
+
+  var layout = {
+    title: 'Number of hours covered each Month',
+    font:{
+      family: 'Raleway, sans-serif'
+    },
+    showlegend: false,
+    xaxis: {
+      tickangle: -45
+    },
+    yaxis: {
+      zeroline: false,
+      gridwidth: 2
+    },
+  };
+  var data = [trace1];
+  Plotly.newPlot('myDivLineMonth', data, layout);
 
 
 </script>
