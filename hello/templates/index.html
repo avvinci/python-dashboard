@@ -49,6 +49,12 @@
       </ul>
       <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
       <ul>
+          <h1>All available courts for {{ club_name }}</h1>
+          <!-- <ul>
+            {% for court in courts %}
+              <li>{{ court.club.establishment }}</li>
+            {% endfor %}
+          </ul> -->
         <li><a href="https://www.heroku.com/home">Heroku</a></li>
         <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
         <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started with Python on
@@ -58,17 +64,17 @@
       </ul>
     </div>
   </div> <!-- row -->
-  <!-- <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div> -->
+
 </div>
 
-
+{% load js %}
 <script>
     var data = [
       {
-        x: ['giraffes', 'orangutans', 'monkeys'],
-        y: [20, 14, 23],
+        // x: ['giraffes', 'orangutans', 'monkeys' ,'hi'],
+        x: {{df_index | js}} ,
+
+        y:  {{df_ml| js}},
         type: 'bar'
       }
     ];
@@ -92,5 +98,5 @@
 
     Plotly.newPlot('myDivLine', data);
   </script>
-  
+
 {% endblock %}
