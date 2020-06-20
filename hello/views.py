@@ -11,7 +11,7 @@ def index(request):
     # return HttpResponse('Hello from Python!')
     print('HI')
     df = pd.read_csv(
-        '/Users/abhinav/Documents/abhinav_vinci/free/python-getting-started/staticfiles/temp.csv')
+        '/Users/abhinav/Documents/abhinav_vinci/free/python-getting-started/gettingstarted/temp.csv')
     df.columns = ["ML"]
     df = df[df.ML < 10]
     print('mean', df['ML'].mean())
