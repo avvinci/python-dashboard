@@ -4,14 +4,15 @@ import requests
 from .models import Greeting
 import pandas as pd
 import datetime
-
+import os
+from gettingstarted.settings import BASE_DIR
+file_path = os.path.join(BASE_DIR, 'gettingstarted/temp.csv')
 
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
-    print('HI')
-    df = pd.read_csv(
-        '/Users/abhinav/Documents/abhinav_vinci/free/python-getting-started/gettingstarted/temp.csv')
+    print('HI', file_path)
+    df = pd.read_csv(file_path)
     df.columns = ["ML"]
     df = df[df.ML < 10]
     print('mean', df['ML'].mean())
